@@ -44,7 +44,7 @@ If you discover any security related issues, please email info@snerve.de instead
 [ico-travis]: https://img.shields.io/travis/simonmarcellinden/jwt/master.svg?style=flat-square
 
 [link-packagist]: https://packagist.org/packages/simonmarcellinden/jwt
-[link-downloads]: https://packagist.org/packages/simonmarcellinden/databasesettings
+[link-downloads]: https://packagist.org/packages/simonmarcellinden/jwt
 [link-travis]: https://travis-ci.org/simonmarcellinden/jwt
 [link-author]: https://github.com/simonmarcellinden
 [link-contributors]: ../../contributors
