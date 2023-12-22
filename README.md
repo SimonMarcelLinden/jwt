@@ -39,9 +39,8 @@ Please see [contributing.md](contributing.md) for details and a todolist.
 
 If you discover any security related issues, please email info@snerve.de instead of using the issue tracker.
 
-[ico-version]: https://img.shields.io/packagist/v/simonmarcellinden/jwt.svg?style=flat-square
-[ico-downloads]: https://img.shields.io/packagist/dt/simonmarcellinden/jwt.svg?style=flat-square
-[ico-travis]: https://img.shields.io/travis/simonmarcellinden/jwt/master.svg?style=flat-square
+[ico-version]: https://img.shields.io/packagist/v/simonmarcellinden/jwt
+[ico-downloads]: https://img.shields.io/packagist/dt/SimonMarcelLinden/jwt
 
 [link-packagist]: https://packagist.org/packages/simonmarcellinden/jwt
 [link-downloads]: https://packagist.org/packages/simonmarcellinden/jwt
