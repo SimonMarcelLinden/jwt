@@ -2,7 +2,6 @@
 
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Total Downloads][ico-downloads]][link-downloads]
-[![Build Status][ico-travis]][link-travis]
 
 Enhance your Laravel and Lumen applications with this efficient JWT package, designed to streamline user authentication using JSON Web Tokens. Experience robust security with minimal complexity. A perfect choice for developers seeking a user-friendly, secure authentication solution.
 
