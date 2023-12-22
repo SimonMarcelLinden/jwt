@@ -1,0 +1,38 @@
+{
+	"name": "simonmarcellinden/jwt",
+	"description": "Efficient JWT auth for Laravel/Lumen. Easy integration, secure, lightweight.",
+	"license": "MIT",
+	"authors": [
+		{
+			"role": "Developer",
+			"name": "Simon Marcel Linden",
+			"email": "info@snerve.de",
+			"homepage": "https://github.com/simonmarcellinden/"
+		}
+	],
+	"homepage": "https://github.com/simonmarcellinden/jwt",
+	"keywords": [
+		"Laravel",
+		"Lumen",
+		"JWT",
+		"Authentification"
+	],
+	"autoload": {
+		"psr-4": {
+			"SimonMarcelLinden\\JWT\\": "src/"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"Simonmarcellinden\\JWT\\Tests\\": "test"
+		}
+	},
+	"require": {},
+	"extra": {
+		"laravel": {
+			"providers": [
+				"SimonMarcelLinden\\JWT\\JWTServiceProvider"
+			]
+		}
+	}
+}
