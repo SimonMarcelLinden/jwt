@@ -5,26 +5,41 @@
 
 Enhance your Laravel and Lumen applications with this efficient JWT package, designed to streamline user authentication using JSON Web Tokens. Experience robust security with minimal complexity. A perfect choice for developers seeking a user-friendly, secure authentication solution.
 
-## Installation
+## Lumen Installation
 
-Via Composer
+**Install via Composer**
 
 ``` bash
 $ composer require simonmarcellinden/jwt
 ```
+---
 
-Register the package's service provider in config/app.php. In Laravel versions 5.5 and beyond, this step can be skipped if package auto-discovery is enabled.
+**Install config File**
 
-Open and add the service provider to `bootstrap/app.php`
-```php
-	$app->register(\SimonMarcelLinden\JWT\JWTServiceProvider::class);
-```
+Use ```php artisan jwt:config``` for install the config file automatically.
 
-### Publish the configurations
-~~Run this on the command line from the root of your project:~~
+Alternatively, copy the ```config``` file from ```simonmarcellinden/jwt/config/config.php```. to the ```config``` folder of your Lumen application and rename it to ```jwt.php```.
+
+Register your config by adding the following in the bootstrap/app.php before middleware declaration.
+``` bash
+$app->configure('jwt');
 ```
-$ no config needed
+---
+
+**Bootstrap file changes**
+Add the following snippet to the ```bootstrap/app.php``` file under the providers section as follows:
+
+``` bash
+$app->register(\SimonMarcelLinden\JWT\JWTServiceProvider::class);
 ```
+---
+**Generate secret key**
+``` bash
+php artisan jwt:generate
+```
+This will update your ```.env``` file with something like JWT_SECRET=AABBCCDDEE
+
+It is the key that will be used to sign your tokens. How that happens exactly will depend on the algorithm that you choose to use.
 
 ## Change log
 
