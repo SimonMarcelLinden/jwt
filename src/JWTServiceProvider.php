@@ -8,7 +8,8 @@ use Illuminate\Support\Facades\Auth;
 
 use SimonMarcelLinden\JWT\Auth\Providers\JwtUserProvider;
 use SimonMarcelLinden\JWT\Auth\Guards\JWTGuard;
-use SimonMarcelLinden\JWT\Console\Commands\JWTCommand;
+use SimonMarcelLinden\JWT\Console\Commands\JWTInstallCommand;
+use SimonMarcelLinden\JWT\Console\Commands\JWTKeyCommand;
 
 /**
  * JWTServiceProvider is a service provider for integrating JWT authentication into Laravel.
@@ -35,6 +36,12 @@ class JWTServiceProvider extends ServiceProvider {
 		Auth::provider('jwt', function ($app, array $config) {
 			return new JwtUserProvider();
 		});
+
+		if ($this->app->runningInConsole()) {
+			$this->commands([
+				JWTKeyCommand::class,
+			]);
+		}
 	}
 
 	/**
