@@ -39,6 +39,7 @@ class JWTServiceProvider extends ServiceProvider {
 
 		if ($this->app->runningInConsole()) {
 			$this->commands([
+				JWTInstallCommand::class,
 				JWTKeyCommand::class,
 			]);
 		}
