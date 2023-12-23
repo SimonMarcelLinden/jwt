@@ -20,7 +20,7 @@ class JWTInstallCommand extends Command {
 	 *
 	 * @var string
 	 */
-    protected $signature 	= 'jwt:install';
+    protected $signature 	= 'jwt:config';
 
 	/**
 	 * The console command description.
