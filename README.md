@@ -39,7 +39,12 @@ php artisan jwt:generate
 ```
 This will update your ```.env``` file with something like JWT_SECRET=AABBCCDDEE
 
-It is the key that will be used to sign your tokens. How that happens exactly will depend on the algorithm that you choose to use.
+---
+**Activate or deactivate JWT routes**
+``` bash
+php artisan jwt:routes {action}
+```
+This option allows you to globally enable or disable the routes provided by this package. By default, all routes are enabled.
 
 ## Change log
 
