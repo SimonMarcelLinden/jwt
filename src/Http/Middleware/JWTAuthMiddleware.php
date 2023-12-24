@@ -24,10 +24,10 @@ use Illuminate\Auth\Middleware\Authenticate as Middleware;
  */
 class JWTAuthMiddleware extends Middleware {
 	/**
-     * Routes that are exempt from JWT authentication.
-     *
-     * @var string[]
-     */
+	 * Routes that are exempt from JWT authentication.
+	 *
+	 * @var string[]
+	 */
 	protected $except = [
 		'api/login',
 		'api/refresh',
@@ -35,14 +35,14 @@ class JWTAuthMiddleware extends Middleware {
 	];
 
 	/**
-     * Handle an incoming request.
-     * Validates JWT token and sets user for authenticated requests.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param \Closure $next
-     * @param mixed ...$guards
-     * @return mixed
-     */
+	 * Handle an incoming request.
+	 * Validates JWT token and sets user for authenticated requests.
+	 *
+	 * @param \Illuminate\Http\Request $request
+	 * @param \Closure $next
+	 * @param mixed ...$guards
+	 * @return mixed
+	 */
 	public function handle($request, Closure $next, ...$guards): mixed {
 		if ($this->shouldPassThrough($request)) {
 			return $next($request);
@@ -72,12 +72,12 @@ class JWTAuthMiddleware extends Middleware {
 		return $next($request);
 	}
 
-    /**
-     * Determines if the request should bypass JWT authentication.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return bool
-     */
+	/**
+	 * Determines if the request should bypass JWT authentication.
+	 *
+	 * @param \Illuminate\Http\Request $request
+	 * @return bool
+	 */
 	protected function shouldPassThrough($request) {
 		foreach ($this->except as $route) {
 			if ($request->is($route)) {

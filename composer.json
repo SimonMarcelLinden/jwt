@@ -27,7 +27,9 @@
 			"Simonmarcellinden\\JWT\\Tests\\": "test"
 		}
 	},
-	"require": {},
+	"require": {
+		"firebase/php-jwt": "^6.10"
+	},
 	"extra": {
 		"laravel": {
 			"providers": [

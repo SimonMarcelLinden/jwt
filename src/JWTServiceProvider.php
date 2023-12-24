@@ -24,14 +24,14 @@ use SimonMarcelLinden\JWT\Routes\RouteMixin;
  *
  */
 class JWTServiceProvider extends ServiceProvider {
-    use RouteMixin;
+	use RouteMixin;
 
 	/**
-     * Bootstrap the application services.
-     * This method extends Laravel's Auth to use JWTGuard and JwtUserProvider.
-     *
-     * @return void
-     */
+	 * Bootstrap the application services.
+	 * This method extends Laravel's Auth to use JWTGuard and JwtUserProvider.
+	 *
+	 * @return void
+	 */
 	public function boot(): void {
 		Auth::extend('jwt', function ($app, $name, array $config) {
 			$key = env('JWT_SECRET');

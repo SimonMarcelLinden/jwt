@@ -72,6 +72,6 @@ class JwtUserProvider implements UserProvider {
 		// Todo: Check if the credentials are valid
 		$plain = $credentials['password'];
 
-        return Hash::check($plain, $user->getAuthPassword());
+		return Hash::check($plain, $user->getAuthPassword());
 	}
 }
