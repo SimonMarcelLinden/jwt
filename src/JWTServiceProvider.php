@@ -10,6 +10,7 @@ use SimonMarcelLinden\JWT\Auth\Providers\JwtUserProvider;
 use SimonMarcelLinden\JWT\Auth\Guards\JWTGuard;
 use SimonMarcelLinden\JWT\Console\Commands\JWTInstallCommand;
 use SimonMarcelLinden\JWT\Console\Commands\JWTKeyCommand;
+use SimonMarcelLinden\JWT\Console\Commands\JWTRouteCommand;
 
 use SimonMarcelLinden\JWT\Routes\RouteMixin;
 
@@ -45,6 +46,7 @@ class JWTServiceProvider extends ServiceProvider {
 			$this->commands([
 				JWTInstallCommand::class,
 				JWTKeyCommand::class,
+				JWTRouteCommand::class,
 			]);
 		}
 		if ($this->app['config']->get('jwt.enable_routes', true)) {
