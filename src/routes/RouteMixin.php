@@ -47,6 +47,10 @@ trait RouteMixin {
 				// Handle the request
 				return response('Page not found', 404);
 			});
+			$router->post('/', function() {
+				// Handle the request
+				return response('Page not found', 404);
+			});
 		});
 	}
 
@@ -61,6 +65,7 @@ trait RouteMixin {
 	private function apiRoutes($router) {
 		$router->group(['prefix' => 'api'], function () use ($router) {
 			$router->post('login', ['uses' => 'SimonMarcelLinden\JWT\Http\Controllers\JWTAuthController@login', 'as' => 'login']);
+			$router->get('me', ['uses' => 'SimonMarcelLinden\JWT\Http\Controllers\JWTAuthController@me', 'as' => 'me']);
 		});
 	}
 }

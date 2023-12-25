@@ -9,6 +9,7 @@ use Firebase\JWT\Key;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use Illuminate\Http\JsonResponse as HttpJsonResponse;
 /**
  * JWT Authentication Controller.
  *
@@ -104,13 +105,19 @@ class JWTAuthController extends Controller {
 	/**
 	 * Retrieve the currently authenticated user.
 	 *
-	 * This method returns the user associated with the current JWT token.
+	 * This method checks if there is a user currently authenticated. If a user is authenticated, it returns
+	 * a JSON response with the user's details. If no user is authenticated, it returns a JSON response with
+	 * an error message indicating invalid credentials.
 	 *
-	 * @param Request $request HTTP request.
-	 * @return void The method does not return a value.
+	 * @param Request $request The incoming HTTP request.
+	 * @return \Illuminate\Http\JsonResponse A JSON response containing either the authenticated user's details or an error message.
+	 *
 	 */
-	public function me(Request $request): void {
-		// Logic to retrieve authenticated user to be implemented.
+	public function me(Request $request): HttpJsonResponse {
+		if(Auth::check())
+			return response()->json(auth()->user());
+		else
+		return response()->json(['message' => 'Invalid credentials'], 401);
 	}
 
 	/**

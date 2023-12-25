@@ -8,10 +8,12 @@ use Illuminate\Support\Facades\Auth;
 
 use SimonMarcelLinden\JWT\Auth\Providers\JwtUserProvider;
 use SimonMarcelLinden\JWT\Auth\Guards\JWTGuard;
+
 use SimonMarcelLinden\JWT\Console\Commands\JWTInstallCommand;
 use SimonMarcelLinden\JWT\Console\Commands\JWTKeyCommand;
 use SimonMarcelLinden\JWT\Console\Commands\JWTRouteCommand;
 
+use SimonMarcelLinden\JWT\Http\Middleware\JWTAuthMiddleware;
 use SimonMarcelLinden\JWT\Routes\RouteMixin;
 
 /**
@@ -49,6 +51,11 @@ class JWTServiceProvider extends ServiceProvider {
 				JWTRouteCommand::class,
 			]);
 		}
+
+		$this->app->middleware([
+			JWTAuthMiddleware::class
+		]);
+
 		if ($this->app['config']->get('jwt.enable_routes', true)) {
 			$this->registerRoutes();
 		}
