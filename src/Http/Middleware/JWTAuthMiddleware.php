@@ -2,7 +2,7 @@
 
 namespace SimonMarcelLinden\JWT\Http\Middleware;
 
-use App\Models\User;
+use SimonMarcelLinden\JWT\Models\User;
 
 use Exception;
 use Firebase\JWT\JWT;

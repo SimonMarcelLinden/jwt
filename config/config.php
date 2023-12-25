@@ -31,7 +31,7 @@ return [
 	'providers' => [
 		'jwt' => [
 			'driver' => 'jwt',
-			'model' => App\User::class,
+			'model' => SimonMarcelLinden\JWT\Models\User::class,
 		],
 	],
 

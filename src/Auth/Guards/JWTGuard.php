@@ -4,7 +4,7 @@ namespace SimonMarcelLinden\JWT\Auth\Guards;
 
 
 use Firebase\JWT\JWT;
-use App\Models\User;
+use SimonMarcelLinden\JWT\Models\User;
 use Illuminate\Auth\GuardHelpers;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\UserProvider;

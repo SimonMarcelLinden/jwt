@@ -2,7 +2,7 @@
 
 namespace SimonMarcelLinden\JWT\Auth\Providers;
 
-use App\Models\User;
+use SimonMarcelLinden\JWT\Models\User;
 use Illuminate\Contracts\Auth\UserProvider;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Facades\Hash;
