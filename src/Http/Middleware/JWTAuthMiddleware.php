@@ -30,7 +30,6 @@ class JWTAuthMiddleware extends Middleware {
 	 */
 	protected $except = [
 		'api/login',
-		'api/refresh',
 		'api/logout'
 	];
 

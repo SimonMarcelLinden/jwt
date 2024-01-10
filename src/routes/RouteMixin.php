@@ -43,11 +43,11 @@ trait RouteMixin {
 		 * It only supports the GET method and returns a 404 response for unmatched routes.
 		 */
 		$router->group(['prefix' => '{any:.*}'], function ($router) {
-			$router->get('/', function() {
+			$router->get('/', function () {
 				// Handle the request
 				return response('Page not found', 404);
 			});
-			$router->post('/', function() {
+			$router->post('/', function () {
 				// Handle the request
 				return response('Page not found', 404);
 			});
@@ -66,6 +66,7 @@ trait RouteMixin {
 		$router->group(['prefix' => 'api'], function () use ($router) {
 			$router->post('login', ['uses' => 'SimonMarcelLinden\JWT\Http\Controllers\JWTAuthController@login', 'as' => 'login']);
 			$router->get('me', ['uses' => 'SimonMarcelLinden\JWT\Http\Controllers\JWTAuthController@me', 'as' => 'me']);
+			$router->get('refresh', ['uses' => 'SimonMarcelLinden\JWT\Http\Controllers\JWTAuthController@refresh', 'as' => 'refresh']);
 		});
 	}
 }

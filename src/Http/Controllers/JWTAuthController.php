@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Http\JsonResponse as HttpJsonResponse;
+
 /**
  * JWT Authentication Controller.
  *
@@ -51,14 +52,14 @@ class JWTAuthController extends Controller {
 		$decodedToken = JWT::decode($token, new Key($key, 'HS256'));
 
 		// Calculate the remaining time until the token expires in seconds.
-		$expiresIn = $decodedToken->exp - time();
+		$expiresIn = $decodedToken->exp;
 
 		// Construct and return a JSON response with the token details.
 		return response()->json([
 			'access_token' => $token,			// The JWT token.
-			'token_type'   => 'bearer',    		// The type of the token.
-			'user'         => auth()->user(),	// The authenticated user.
-			'expires_in'   => $expiresIn 		// The time in seconds until the token expires.
+			'token_type' => 'bearer',    		// The type of the token.
+			'user' => auth()->user(),	// The authenticated user.
+			'expires_in' => $expiresIn 		// The time in seconds until the token expires.
 		]);
 	}
 
@@ -74,7 +75,7 @@ class JWTAuthController extends Controller {
 	 * @return JsonResponse Returns a JSON response with the JWT on successful authentication or an error message on failure.
 	 *
 	 */
-	public function login(Request $request)  {
+	public function login(Request $request) {
 		$this->validate($request, [
 			'email' => 'required|string',
 			'password' => 'required|string',
@@ -82,7 +83,7 @@ class JWTAuthController extends Controller {
 
 		$credentials = $request->only(['email', 'password']);
 
-		if (! $token = Auth::attempt($credentials)) {
+		if (!$token = Auth::attempt($credentials)) {
 			return response()->json(['message' => 'Invalid credentials'], 401);
 		}
 
@@ -114,10 +115,10 @@ class JWTAuthController extends Controller {
 	 *
 	 */
 	public function me(Request $request): HttpJsonResponse {
-		if(Auth::check())
+		if (Auth::check())
 			return response()->json(auth()->user());
 		else
-		return response()->json(['message' => 'Invalid credentials'], 401);
+			return response()->json(['message' => 'Invalid credentials'], 401);
 	}
 
 	/**
@@ -126,9 +127,17 @@ class JWTAuthController extends Controller {
 	 * This method refreshes the current JWT, potentially extending the session or modifying the token claims.
 	 *
 	 * @param Request $request HTTP request.
-	 * @return void The method does not return a value.
+	 * @return \Illuminate\Http\JsonResponse A JSON response containing either the authenticated user's details or an error message.
 	 */
-	public function refresh(Request $request): void {
-		// JWT refresh logic to be implemented.
+	public function refresh(Request $request) {
+		// Todo: Invalidate old token e.g.: save it in the database and query it
+		if (!($user = Auth::check())) {
+			return response()->json(['message' => 'Invalid token'], 401);
+		}
+
+		$user = Auth::user();
+		$newToken = auth()->guard()->createNewToken($user);
+
+		return $this->jsonResponse($newToken);
 	}
 }

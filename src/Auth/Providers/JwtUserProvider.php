@@ -20,18 +20,7 @@ use Illuminate\Support\Facades\Hash;
  */
 class JwtUserProvider implements UserProvider {
 	public function retrieveById($identifier) {
-		// Todo: Retrieve user by their ID
-	}
-
-	/**
-	 * Retrieve a user by their unique identifier and "remember me" token.
-	 *
-	 * @param mixed $identifier User identifier.
-	 * @param string $token Remember me token.
-	 * @return User|null
-	 */
-	public function retrieveByToken($identifier, $token) {
-		// Todo: Retrieve user by a token
+		return User::find($identifier);
 	}
 
 	/**
@@ -52,8 +41,6 @@ class JwtUserProvider implements UserProvider {
 	 * @return User|null
 	 */
 	public function retrieveByCredentials(array $credentials) {
-		// Todo: Retrieve user by the given credentials
-		// For example, searching for a user based on email
 		if (empty($credentials['email'])) {
 			return null;
 		}
@@ -69,7 +56,6 @@ class JwtUserProvider implements UserProvider {
 	 * @return bool
 	 */
 	public function validateCredentials(Authenticatable $user, array $credentials) {
-		// Todo: Check if the credentials are valid
 		$plain = $credentials['password'];
 
 		return Hash::check($plain, $user->getAuthPassword());

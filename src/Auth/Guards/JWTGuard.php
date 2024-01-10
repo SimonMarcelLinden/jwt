@@ -13,6 +13,7 @@ use Illuminate\Contracts\Auth\Authenticatable;
 
 /**
  * The JWTGuard class implements a custom authentication guard using JWT (JSON Web Tokens).
+ * This guard is responsible for handling user authentication and validation using JWTs.
  *
  * @Author: Simon Marcel Linden
  * @Version: 1.0.0
@@ -63,14 +64,14 @@ class JWTGuard implements Guard {
 			return $this->generateJwtToken($user);
 		}
 
-		return false;
+		return "false";
 	}
 
 	/**
 	 * Generate a JWT token for a given user.
 	 *
 	 * @param Authenticatable $user The user instance.
-	 * @return string
+	 * @return string The generated JWT token.
 	 */
 	protected function generateJwtToken(Authenticatable $user) {
 		$payload = [
@@ -81,6 +82,19 @@ class JWTGuard implements Guard {
 		];
 
 		return JWT::encode($payload, $this->key, 'HS256');
+	}
+
+	/**
+	 * Create a new JWT token for a given user.
+	 *
+	 * This method is a wrapper around the generateJwtToken method, providing a public interface to
+	 * generate a new JWT token for a given user.
+	 *
+	 * @param Authenticatable $user The user instance.
+	 * @return string The generated JWT token.
+	 */
+	public function createNewToken(Authenticatable $user) {
+		return $this->generateJwtToken($user);
 	}
 
 	/**
