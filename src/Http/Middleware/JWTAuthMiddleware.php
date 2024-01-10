@@ -57,17 +57,19 @@ class JWTAuthMiddleware extends Middleware {
 			$key = env('JWT_SECRET');
 			$credentials = JWT::decode($token, new Key($key, 'HS256'));
 		} catch (ExpiredException $e) {
-			return response()->json(['message' => 'Provided token is expired.'], 400);
+			return response()->json(['message' => 'Provided token is expired.'], 401);
 		} catch (Exception $e) {
-			return response()->json(['message' => 'An error occurred while decoding token.'], 400);
+			return response()->json(['message' => 'An error occurred while decoding token.'], 401);
 		}
 
-		$user = User::find($credentials->sub);
+		$user = $this->auth->guard()->getProvider()->retrieveById($credentials->sub);
 
 		if (!$user) {
 			return response()->json(['message' => 'User not found'], 404);
 		}
-		$request->auth = $user;
+
+		$this->auth->guard()->setUser($user);
+		$request->user = $user;
 
 		return $next($request);
 	}
