@@ -2,8 +2,8 @@
 
 namespace SimonMarcelLinden\JWT\Auth\Guards;
 
-
 use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 use SimonMarcelLinden\JWT\Models\User;
 use Illuminate\Auth\GuardHelpers;
 use Illuminate\Contracts\Auth\Guard;
@@ -84,6 +84,27 @@ class JWTGuard implements Guard {
 	}
 
 	/**
+	 * Extract JWT token from the request header.
+	 *
+	 * @return string|null The JWT token if present in the request header.
+	 */
+	protected function getTokenFromRequest() {
+		return $this->request->bearerToken();
+	}
+
+	/**
+	 * Get the user ID from the JWT token.
+	 *
+	 * @param string $token The JWT token.
+	 * @return int The user ID decoded from the token.
+	 */
+	protected function getUserIdFromToken($token) {
+		$key = $this->key;
+		$decoded = JWT::decode($token, new Key($key, 'HS256'));
+		return $decoded->sub;
+	}
+
+	/**
 	 * Check if the current user is authenticated.
 	 *
 	 * @return bool
@@ -111,11 +132,13 @@ class JWTGuard implements Guard {
 			return $this->user;
 		}
 
-		// Todo: Replace this with a valid query using user input
-		// $id = $this->request->input('user_id');
-		// return $this->user = $this->provider->retrieveById($id);
-		$user = User::where('email', 'admin@lumen-template.de')->first();
-		return $this->user = $user;
+		$token = $this->getTokenFromRequest();
+		if ($token) {
+			$userId = $this->getUserIdFromToken($token);
+			$this->user = $this->provider->retrieveById($userId);
+		}
+
+		return $this->user;
 	}
 
 	/**
