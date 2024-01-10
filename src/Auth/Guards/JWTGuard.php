@@ -74,10 +74,10 @@ class JWTGuard implements Guard {
 	 */
 	protected function generateJwtToken(Authenticatable $user) {
 		$payload = [
-			'iss' => "jwt_issuer",				// Token issuer
-			'sub' => $user->getAuthIdentifier(),// Subject ID (usually the User ID)
-			'iat' => time(), 					// Token creation time
-			'exp' => time() + 60 * 60, 			// Token expiry time (e.g., 1 hour)
+			'iss' => "jwt_issuer",					// Token issuer
+			'sub' => $user->getAuthIdentifier(),	// Subject ID (usually the User ID)
+			'iat' => time(), 						// Token creation time
+			'exp' => (time() + 60 * 60) * 1000, 	// Token expiry time (e.g., 1 hour)
 		];
 
 		return JWT::encode($payload, $this->key, 'HS256');

@@ -13,6 +13,7 @@ use SimonMarcelLinden\JWT\Console\Commands\JWTInstallCommand;
 use SimonMarcelLinden\JWT\Console\Commands\JWTKeyCommand;
 use SimonMarcelLinden\JWT\Console\Commands\JWTRouteCommand;
 
+use SimonMarcelLinden\JWT\Http\Middleware\CorsMiddleware;
 use SimonMarcelLinden\JWT\Http\Middleware\JWTAuthMiddleware;
 use SimonMarcelLinden\JWT\Routes\RouteMixin;
 
@@ -53,6 +54,7 @@ class JWTServiceProvider extends ServiceProvider {
 		}
 
 		$this->app->middleware([
+			CorsMiddleware::class,
 			JWTAuthMiddleware::class
 		]);
 
