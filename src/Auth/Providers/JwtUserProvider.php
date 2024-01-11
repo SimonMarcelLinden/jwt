@@ -19,8 +19,26 @@ use Illuminate\Support\Facades\Hash;
  *
  */
 class JwtUserProvider implements UserProvider {
-	public function retrieveById($identifier) {
+
+	/**
+	 * Retrieve a user by their unique identifier.
+	 *
+	 * @param  mixed  $identifier
+	 * @return \Illuminate\Contracts\Auth\Authenticatable|null
+	 */
+	public function retrieveById($identifier): User {
 		return User::find($identifier);
+	}
+
+	/**
+	 * Retrieve a user by their unique identifier and "remember me" token.
+	 *
+	 * @param  mixed  $identifier
+	 * @param  string  $token
+	 * @return \Illuminate\Contracts\Auth\Authenticatable|null
+	 */
+	public function retrieveByToken($identifier, $token): Authenticatable|null {
+		return null;
 	}
 
 	/**
@@ -30,8 +48,8 @@ class JwtUserProvider implements UserProvider {
 	 * @param string $token The new remember token.
 	 * @return void
 	 */
-	public function updateRememberToken(Authenticatable $user, $token) {
-		// Todo: Update remember token
+	public function updateRememberToken(Authenticatable $user, $token): void {
+		// Method not supported in JWT based authentication
 	}
 
 	/**
