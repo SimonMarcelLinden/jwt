@@ -24,8 +24,7 @@ trait Uuids {
 	 * 'creating' event of a model, ensuring that a UUID is automatically generated and assigned as
 	 * the primary key if it is not already set.
 	 */
-	protected static function boot() {
-		parent::boot();
+	protected static function bootUuids() {
 		static::creating(function ($model) {
 			if (empty($model->{$model->getKeyName()})) {
 				$model->{$model->getKeyName()} = Str::uuid()->toString();

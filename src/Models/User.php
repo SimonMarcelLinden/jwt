@@ -29,6 +29,12 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 	use Authenticatable, Authorizable, HasFactory, SoftDeletes, Uuids;
 
 	/**
+	 * The table associated with the model.
+	 *
+	 * @var string
+	 */
+	protected $table = 'users';
+	/**
 	 * The attributes that are mass assignable.
 	 *
 	 * These attributes can be filled in bulk and are safe to be input by users.
@@ -71,5 +77,9 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 	public function toArray() {
 		// Custom logic to transform the model to an array.
 		return (new UserResource($this))->resolve();
+	}
+
+	public function permissions() {
+		return $this->belongsToMany(Permission::class);
 	}
 }
