@@ -5,6 +5,7 @@ namespace SimonMarcelLinden\JWT;
 use Illuminate\Support\ServiceProvider;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 use SimonMarcelLinden\JWT\Auth\Providers\JwtUserProvider;
 use SimonMarcelLinden\JWT\Auth\Guards\JWTGuard;
@@ -36,6 +37,13 @@ class JWTServiceProvider extends ServiceProvider {
 	 * @return void
 	 */
 	public function boot(): void {
+		$this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+		$this->publishes([__DIR__ . '/../database/migrations' => database_path('migrations')], 'migrations');
+
+		Factory::guessFactoryNamesUsing(function (string $modelName) {
+			return 'SimonMarcelLinden\\JWT\\Database\\Factories\\' . class_basename($modelName) . 'Factory';
+		});
+
 		Auth::extend('jwt', function ($app, $name, array $config) {
 			$key = env('JWT_SECRET');
 			return new JWTGuard(Auth::createUserProvider($config['provider']), $app['request'], $key);
@@ -55,8 +63,7 @@ class JWTServiceProvider extends ServiceProvider {
 
 		$this->app->middleware([
 			CorsMiddleware::class,
-			JWTAuthMiddleware::class
-		]);
+			JWTAuthMiddleware::class]);
 
 		if ($this->app['config']->get('jwt.enable_routes', true)) {
 			$this->registerRoutes();
