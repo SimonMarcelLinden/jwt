@@ -46,6 +46,36 @@ php artisan jwt:routes {action}
 ```
 This option allows you to globally enable or disable the routes provided by this package. By default, all routes are enabled.
 
+---
+**Update Seeder and run the migrations** 
+
+Update your main seeder
+```php
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
+
+class DatabaseSeeder extends Seeder {
+	/**
+	 * Run the database seeds.
+	 *
+	 * @return void
+	 */
+	public function run() {
+		$this->call('SimonMarcelLinden\\JWT\\database\\seeders\\UserSeeder');
+		$this->call('SimonMarcelLinden\\JWT\\database\\seeders\\PermissionSeeder');
+	}
+}
+```
+
+and run the migrations to add the required tables to your database.
+```bash
+php artisan migrate:fresh --seed
+```
+
 ## Change log
 
 Please see the [changelog](changelog.md) for more information on what has changed recently.
