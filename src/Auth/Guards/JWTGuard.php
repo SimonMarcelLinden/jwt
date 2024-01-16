@@ -64,7 +64,7 @@ class JWTGuard implements Guard {
 			return $this->generateJwtToken($user);
 		}
 
-		return "false";
+		return false;
 	}
 
 	/**

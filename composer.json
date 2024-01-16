@@ -19,7 +19,10 @@
 	],
 	"autoload": {
 		"psr-4": {
-			"SimonMarcelLinden\\JWT\\": "src/"
+			"SimonMarcelLinden\\JWT\\": "src/",
+			"SimonMarcelLinden\\JWT\\Database\\": "database/",
+			"SimonMarcelLinden\\JWT\\Database\\Factories\\": "src/database/factories/",
+			"SimonMarcelLinden\\JWT\\Database\\Seeders\\": "src/database/seeders/"
 		}
 	},
 	"autoload-dev": {

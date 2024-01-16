@@ -16,6 +16,7 @@ use SimonMarcelLinden\JWT\Console\Commands\JWTRouteCommand;
 
 use SimonMarcelLinden\JWT\Http\Middleware\CorsMiddleware;
 use SimonMarcelLinden\JWT\Http\Middleware\JWTAuthMiddleware;
+use SimonMarcelLinden\JWT\Http\Middleware\CheckPermission;
 use SimonMarcelLinden\JWT\Routes\RouteMixin;
 
 /**
@@ -53,6 +54,16 @@ class JWTServiceProvider extends ServiceProvider {
 			return new JwtUserProvider();
 		});
 
+		// Globale Middleware
+		$this->app->middleware([
+			CorsMiddleware::class,
+			JWTAuthMiddleware::class,
+		]);
+
+		$this->app->routeMiddleware([
+			'permission' => CheckPermission::class,
+		]);
+
 		if ($this->app->runningInConsole()) {
 			$this->commands([
 				JWTInstallCommand::class,
@@ -60,10 +71,6 @@ class JWTServiceProvider extends ServiceProvider {
 				JWTRouteCommand::class,
 			]);
 		}
-
-		$this->app->middleware([
-			CorsMiddleware::class,
-			JWTAuthMiddleware::class]);
 
 		if ($this->app['config']->get('jwt.enable_routes', true)) {
 			$this->registerRoutes();
