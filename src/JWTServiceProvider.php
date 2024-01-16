@@ -22,6 +22,7 @@ use SimonMarcelLinden\JWT\Routes\RouteMixin;
 /**
  * JWTServiceProvider is a service provider for integrating JWT authentication into Laravel.
  * It registers JWTGuard and JwtUserProvider for handling authentication and user retrieval.
+ * This provider also configures necessary middleware, console commands, and routes for the JWT functionality.
  *
  * @Author: Simon Marcel Linden
  * @Version: 1.0.0
@@ -33,7 +34,8 @@ class JWTServiceProvider extends ServiceProvider {
 
 	/**
 	 * Bootstrap the application services.
-	 * This method extends Laravel's Auth to use JWTGuard and JwtUserProvider.
+	 * This method extends Laravel's Auth to use JWTGuard and JwtUserProvider. It also sets up
+	 * the factory naming scheme, global and route-specific middleware, and console commands for JWT.
 	 *
 	 * @return void
 	 */

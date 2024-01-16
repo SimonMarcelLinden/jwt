@@ -4,8 +4,17 @@ namespace SimonMarcelLinden\JWT\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
 
+/**
+ * CheckPermission Middleware.
+ *
+ * This middleware is responsible for checking if the authenticated user has the required permission
+ * to access a specific route or resource. It's designed to work with JWT authentication.
+ *
+ * @Author: Simon Marcel Linden
+ * @Version: 1.0.0
+ * @since: 1.0.0
+ */
 class CheckPermission {
 	/**
 	 * Routes that are exempt from JWT authentication.
@@ -17,7 +26,19 @@ class CheckPermission {
 		'api/logout'
 	];
 
-	public function handle($request, Closure $next, $ability = null) {
+	/**
+	 * Handle an incoming request.
+	 *
+	 * This method checks if the authenticated user has the required permission to proceed with the request.
+	 * If the user has the necessary permission, the request is passed further down the application pipeline.
+	 * Otherwise, a response with 'Access denied' message is returned.
+	 *
+	 * @param \Illuminate\Http\Request $request The incoming HTTP request.
+	 * @param Closure $next The next middleware in the pipeline.
+	 * @param string|null $ability The required permission to check for.
+	 * @return mixed The response object or the next middleware.
+	 */
+	public function handle($request, Closure $next, $ability = null): mixed {
 		if ($this->shouldPassThrough($request)) {
 			return $next($request);
 		}
@@ -38,10 +59,13 @@ class CheckPermission {
 	/**
 	 * Determines if the request should bypass JWT authentication.
 	 *
-	 * @param \Illuminate\Http\Request $request
-	 * @return bool
+	 * This method checks if the current request matches any of the routes specified in the $except array.
+	 * If a match is found, the request is allowed to bypass JWT authentication checks.
+	 *
+	 * @param \Illuminate\Http\Request $request The incoming HTTP request.
+	 * @return bool True if the request should bypass authentication, false otherwise.
 	 */
-	protected function shouldPassThrough($request) {
+	protected function shouldPassThrough($request): bool {
 		foreach ($this->except as $route) {
 			if ($request->is($route)) {
 				return true;
