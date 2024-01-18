@@ -2,13 +2,12 @@
 
 namespace SimonMarcelLinden\JWT\Http\Middleware;
 
-use SimonMarcelLinden\JWT\Models\User;
+use SimonMarcelLinden\JWT\Exceptions\ResponseException;
 
 use Exception;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 use Firebase\JWT\ExpiredException;
-use Illuminate\Http\Request;
 
 use Closure;
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
@@ -64,7 +63,7 @@ class JWTAuthMiddleware extends Middleware {
 		$user = $this->auth->guard()->getProvider()->retrieveById($credentials->sub);
 
 		if (!$user) {
-			return response()->json(['message' => 'User not found'], 404);
+			throw new ResponseException("User not found based on the provided criteria", 404);
 		}
 
 		$this->auth->guard()->setUser($user);

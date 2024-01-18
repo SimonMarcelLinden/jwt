@@ -77,11 +77,11 @@ class JWTAuthController extends Controller {
 	 */
 	public function login(Request $request) {
 		$this->validate($request, [
-			'email' => 'required|string',
+			'username' => 'required|string',
 			'password' => 'required|string',
 		]);
 
-		$credentials = $request->only(['email', 'password']);
+		$credentials = $request->only(['username', 'password']);
 
 		if (!$token = Auth::attempt($credentials)) {
 			return response()->json(['message' => 'Invalid credentials'], 401);
