@@ -29,7 +29,7 @@ class LdapService {
 		$ldapServer = config('jwt.ldap.host', 'default');
 		$ldapPort = config('jwt.ldap.port', 389);
 
-		if ($this->setLdapConnection(ldap_connect($ldapServer, $ldapPort))) {
+		if ($this->ldapConnection = ldap_connect($ldapServer, $ldapPort)) {
 			ldap_set_option($this->ldapConnection, LDAP_OPT_PROTOCOL_VERSION, 3);
 			ldap_set_option($this->ldapConnection, LDAP_OPT_REFERRALS, 0);
 		} else {
