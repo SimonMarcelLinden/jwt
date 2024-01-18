@@ -4,12 +4,16 @@ namespace SimonMarcelLinden\JWT\Auth\Guards;
 
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
+
 use SimonMarcelLinden\JWT\Models\User;
 use Illuminate\Auth\GuardHelpers;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\UserProvider;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Auth\Authenticatable;
+
+use SimonMarcelLinden\JWT\Services\LdapService;
+use SimonMarcelLinden\JWT\Exceptions\ResponseException;
 
 /**
  * The JWTGuard class implements a custom authentication guard using JWT (JSON Web Tokens).
@@ -59,12 +63,23 @@ class JWTGuard implements Guard {
 	public function attempt(array $credentials = []) {
 		$user = $this->provider->retrieveByCredentials($credentials);
 
-		if ($user && $this->provider->validateCredentials($user, $credentials)) {
-			$this->setUser($user);
-			return $this->generateJwtToken($user);
+		if (!$user && config('jwt.auth_method', 'database') == 'ldap') {
+			$ldapService = new LdapService();
+
+			if (!($user = $ldapService->authenticate($credentials['username'], $credentials['password']))) {
+				throw new ResponseException('Invalid credentials or authentication method', 401);
+			}
+
+			$credentials = array_merge($credentials, $user);
+			$user = $this->provider->createUserFromLdap($credentials);
 		}
 
-		return false;
+		if ($this->provider->validateCredentials($user, $credentials)) {
+			$this->setUser($user);
+			return $this->generateJwtToken($user);
+		} else {
+			throw new ResponseException('Invalid credentials', 401);
+		}
 	}
 
 	/**

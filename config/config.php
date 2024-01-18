@@ -47,5 +47,16 @@ return [
 	| or avoid conflicts with existing routes in your application.
 	|
 	*/
+
 	'enable_routes' => true,
+
+	'auth_method' => env('AUTH_METHOD', 'database'), // Standardmäßig 'database' oder 'ldap'
+	'ldap' => [
+		'host' => env('LDAP_HOST'),
+		'connection' => env('LDAP_CONNECTION'),
+		'username' => env('LDAP_USERNAME'),
+		'password' => env('LDAP_PASSWORD'),
+		'port' => env('LDAP_PORT'),
+		'base' => env('LDAP_BASE_DN'),
+	],
 ];
