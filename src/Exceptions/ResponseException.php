@@ -43,15 +43,6 @@ class ResponseException extends Exception {
 	}
 
 	/**
-	 * Override the getMessage method to return the exception message.
-	 *
-	 * @return string The exception message.
-	 */
-	public function getMessage() {
-		return $this->message;
-	}
-
-	/**
 	 * Get a string representation of the HTTP status code.
 	 *
 	 * @return string The HTTP status code as a string.
